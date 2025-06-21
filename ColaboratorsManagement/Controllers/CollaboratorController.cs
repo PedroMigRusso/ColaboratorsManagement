@@ -74,18 +74,7 @@ namespace ColaboratorsManagement.Controllers
             }
         }
 
-        public IActionResult Create()
-        {
-            try
-            {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error in Create (GET) action: {ex.Message}");
-                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            }
-        }
+        public IActionResult Create() => View();
 
         [HttpPost]
         public async Task<IActionResult> Create(CollaboratorModel colaborador)
