@@ -1,0 +1,85 @@
+﻿@model IEnumerable<CollaboratorModel>
+
+@{
+    ViewData["Title"] = "Lista de Colaboradores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentSearch = ViewBag.CurrentSearch as string ?? "";
+    var currentTech = ViewBag.CurrentTech as string ?? "";
+    var currentPage = (int)(ViewBag.CurrentPage ?? 1);
+    var totalPages = (int)(ViewBag.TotalPages ?? 1);
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="get" asp-action="Index" class="mb-4">
+    <div class="row g-2">
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control"
+                   placeholder="Pesquisar por nome..."
+                   value="@currentSearch" />
+        </div>
+        <div class="col-md-4">
+            <input list="techList" name="technology" class="form-control"
+                   placeholder="Tecnologia (ou escolha)"
+                   value="@currentTech" />
+            <datalist id="techList">
+                <option value="">-- Todas as Tecnologias --</option>
+                @foreach (var tech in (SelectList)ViewBag.Technology)
+                {
+                    <option value="@tech.Value">@tech.Text</option>
+                }
+            </datalist>
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a asp-action="Index" class="btn btn-secondary">Limpar</a>
+        </div>
+    </div>
+</form>
+<p>
+    <a asp-action="Create" class="btn btn-success">Novo Colaborador</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data Nascimento</th>
+            <th>Anos de Experiência</th>
+            <th>Tecnologias</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.BirthDate.ToShortDateString()</td>
+                <td>@item.YearsOfExperience</td>
+                <td>@item.BetterTechnology</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (totalPages > 1)
+{
+    <nav aria-label="Paginação">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-search="@currentSearch"
+                       asp-route-technology="@currentTech"
+                       asp-route-page="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

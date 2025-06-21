@@ -1,0 +1,29 @@
+﻿@model CollaboratorModel
+@{
+    ViewData["Title"] = "Editar Colaborador";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group mb-2">
+        <label>Nome</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group mb-2">
+        <label>Data de Nascimento</label>
+        <input asp-for="BirthDate" type="date" class="form-control" />
+    </div>
+    <div class="form-group mb-2">
+        <label>Anos de Experiência</label>
+        <input asp-for="YearsOfExperience" type="number" class="form-control" />
+    </div>
+    <div class="form-group mb-3">
+        <label>Tecnologias</label>
+        <input asp-for="BetterTechnology" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

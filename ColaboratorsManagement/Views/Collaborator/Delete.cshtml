@@ -1,0 +1,22 @@
+﻿@model CollaboratorModel
+@{
+    ViewData["Title"] = "Eliminar Colaborador";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Tem a certeza que quer eliminar este colaborador?</h4>
+
+<div class="border p-3 mb-3">
+    <p><strong>Nome:</strong> @Model.Name</p>
+    <p><strong>Data de Nascimento:</strong> @Model.BirthDate.ToShortDateString()</p>
+    <p><strong>Anos de Experiência:</strong> @Model.YearsOfExperience</p>
+    <p><strong>Tecnologias:</strong> @Model.BetterTechnology</p>
+</div>
+
+<form asp-action="DeleteConfirmed">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
